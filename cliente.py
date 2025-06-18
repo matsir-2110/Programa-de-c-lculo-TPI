@@ -151,6 +151,8 @@ def generar_pdf(fecha):
     else:
         c.drawString(50, y, "No se encontró la compra en el archivo.")
     c.save()
+    abrir_pdf = filename
+    os.startfile(abrir_pdf)
     return filename
 
 def mostrar_datos_transferencia():
