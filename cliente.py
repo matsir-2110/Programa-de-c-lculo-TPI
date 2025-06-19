@@ -13,7 +13,7 @@ with open("productos.json", "r", encoding="utf-8") as f:
 
 carrito = []
 
-# Funciones
+# ...Funciones...
 def actualizar_listboxes():
     listbox_productos.delete(0, tk.END)
     for p in productos:
@@ -226,7 +226,7 @@ def finalizar_compra():
     except Exception as e:
         messagebox.showerror("Error", f"No se pudo guardar la compra o generar PDF:\n{e}")
 
-# ------------------------ Interfaz Gráfica ------------------------
+# ...Interfaz Gráfica...
 root = tk.Tk()
 root.title("Distribuidora de Productos de Limpieza")
 root.geometry("820x600")

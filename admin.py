@@ -72,7 +72,7 @@ def productos():
         top2_agregar.geometry("600x600")
         top2_agregar.configure(bg="#121426")
         
-        est_label = {"bg": "#466561", "fg": "#000000", "font": ("Segoe UI", 12)}
+        est_label = {"bg": "#121426", "fg": "#FFFFFF", "font": ("Segoe UI", 12)}
         est_input = {"bg": "#ffffff", "fg": "#000000", "font": ("Segoe UI", 12), }
 
         #Nombre
@@ -137,7 +137,7 @@ def productos():
         top2_modificar.geometry("600x600")
         top2_modificar.configure(bg="#121426")
 
-        est_label = {"bg": "#466561", "fg": "#000000", "font": ("Segoe UI", 12)}
+        est_label = {"bg": "#121426", "fg": "#FFFFFF", "font": ("Segoe UI", 12)}
         est_input = {"bg": "#ffffff", "fg": "#000000", "font": ("Segoe UI", 12), }
 
         #Se tiene que crear una listbox para mostrar los productos

@@ -59,7 +59,7 @@ def calcular():
     mapa.save(nombre_mapa)
     webbrowser.open(nombre_mapa)
 
-# --- INTERFAZ ELEGANTE OSCURA ---
+# Interfaz
 ventana = tk.Tk()
 ventana.title("Simulador Logístico")
 ventana.geometry("500x300")
