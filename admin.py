@@ -72,7 +72,7 @@ def productos():
         top2_agregar.geometry("600x600")
         top2_agregar.configure(bg="#121426")
         
-        est_label = {"bg": "#121426", "fg": "#FFFFFF", "font": ("Segoe UI", 12)}
+        est_label = {"bg": "#466561", "fg": "#000000", "font": ("Segoe UI", 12)}
         est_input = {"bg": "#ffffff", "fg": "#000000", "font": ("Segoe UI", 12), }
 
         #Nombre
@@ -137,7 +137,7 @@ def productos():
         top2_modificar.geometry("600x600")
         top2_modificar.configure(bg="#121426")
 
-        est_label = {"bg": "#121426", "fg": "#FFFFFF", "font": ("Segoe UI", 12)}
+        est_label = {"bg": "#466561", "fg": "#000000", "font": ("Segoe UI", 12)}
         est_input = {"bg": "#ffffff", "fg": "#000000", "font": ("Segoe UI", 12), }
 
         #Se tiene que crear una listbox para mostrar los productos
@@ -235,19 +235,19 @@ def apartado_chofer():
         API_KEY = "5b3ce3597851110001cf624816dd98becc4e4cce880a6c473c5ba5d3"
         client = Client(key=API_KEY)
         # Coordenadas de Distribuidora Luicho
-        origen_coords = (-27.48857029818254, -58.761975598687)
+        origen_coords = (-58.761975598687, -27.48857029818254)
         #Coordenadas del lugar donde ocurre la avería
-        destino_coords = (-31.307345, -60.755434)
+        destino_coords = (-60.755434, -31.307345) 
 
         ruta = client.directions(
-            coordinates=[origen_coords[::-1], destino_coords[::-1]],
+            coordinates=[origen_coords, destino_coords],
             profile='driving-car',
             format='geojson'
         )
         
-        mapa = folium.Map(location=origen_coords, zoom_start=6)
-        folium.Marker(location=origen_coords, tooltip="Distribuidora Luicho").add_to(mapa)
-        folium.Marker(location=destino_coords, tooltip=f"Nelson").add_to(mapa)
+        mapa = folium.Map(location=(origen_coords[1],origen_coords[0]), zoom_start=6)
+        folium.Marker(location=(origen_coords[1],origen_coords[0]), tooltip="Distribuidora Luicho").add_to(mapa)
+        folium.Marker(location=(destino_coords[1],destino_coords[0]), tooltip=f"Nelson").add_to(mapa)
         folium.GeoJson(ruta).add_to(mapa)
         nombre_mapa = "ruta_averia.html"
         mapa.save(nombre_mapa)

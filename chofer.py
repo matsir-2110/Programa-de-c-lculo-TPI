@@ -10,21 +10,21 @@ API_KEY = "5b3ce3597851110001cf624816dd98becc4e4cce880a6c473c5ba5d3"
 client = Client(key=API_KEY)
 
 # Coordenadas de Distribuidora Luicho
-origen_coords = (-27.48857029818254, -58.761975598687)
+origen_coords = (-58.761975598687, -27.48857029818254)
 
 # Destinos disponibles
 DESTINOS = {
-    "Puerto de Rosario": (-32.971816715054906, -60.6203869954716),
-    "Empedrado": (-27.950793, -58.800928),
-    "San Lorenzo": (-28.137027, -58.766337),
-    "Saladas": (-28.257450, -58.623873),
-    "Mburucuya": (-28.047187, -58.224567),
-    "Caa Cati": (-27.751661, -57.621642),
-    "San Miguel": (-27.998588, -57.591753),
-    "Itaibate": (-27.426549, -57.337789),
-    "Itati": (-27.269164, -58.243407),
-    "Paso de la Patria": (-27.316371, -58.568572),
-    "Paso de los Libres": (-29.714733, -57.102357),
+    "Puerto de Rosario": (-60.6203869954716, -32.971816715054906),
+    "Empedrado": (-58.800928, -27.950793),
+    "San Lorenzo": (-58.766337, -28.137027),
+    "Saladas": (-58.623873, -28.257450),
+    "Mburucuya": (-58.224567, -28.047187),
+    "Caa Cati": (-57.621642, -27.751661),
+    "San Miguel": (-57.591753, -27.998588),
+    "Itaibate": (-57.337789, -27.426549),
+    "Itati": (-58.243407, -27.269164),
+    "Paso de la Patria": (-58.568572, -27.316371),
+    "Paso de los Libres": (-57.102357, -29.714733),
 }
 
 def calcular():
@@ -37,7 +37,7 @@ def calcular():
 
     try:
         ruta = client.directions(
-            coordinates=[origen_coords[::-1], destino_coords[::-1]],
+            coordinates=[origen_coords, destino_coords],
             profile='driving-car',
             format='geojson'
         )
@@ -51,9 +51,9 @@ def calcular():
     resumen = f"Destino: {destino_nombre}\nDistancia: {distancia_km:.2f} km\nDuración: {duracion_min:.2f} minutos"
     messagebox.showinfo("Resumen de Ruta", resumen)
 
-    mapa = folium.Map(location=origen_coords, zoom_start=6)
-    folium.Marker(location=origen_coords, tooltip="Distribuidora Luicho").add_to(mapa)
-    folium.Marker(location=destino_coords, tooltip=f"Destino - {destino_nombre}").add_to(mapa)
+    mapa = folium.Map(location=(origen_coords[1], origen_coords[0]), zoom_start=6)
+    folium.Marker(location=(origen_coords[1], origen_coords[0]), tooltip="Distribuidora Luicho").add_to(mapa)
+    folium.Marker(location=(destino_coords[1], destino_coords[0]), tooltip=f"Destino - {destino_nombre}").add_to(mapa)
     folium.GeoJson(ruta).add_to(mapa)
     nombre_mapa = "mapa_ruta.html"
     mapa.save(nombre_mapa)
@@ -65,7 +65,7 @@ ventana.title("Simulador Logístico")
 ventana.geometry("500x300")
 ventana.configure(bg="#1e1e1e")
 
-#Estilos
+# Estilos
 etiqueta_color = "#ffffff"
 boton_bg = "#2d2d2d"
 boton_fg = "#ffffff"
@@ -75,7 +75,7 @@ fuente = ("Segoe UI", 12)
 
 #Botón para mostrar pedidos
 def mostrar_pedidos():
-    messagebox.showinfo("Pedidos", "Mostrando los pedidos")
+    messagebox.showinfo("Pedidos", "Mostrando los pedidos diarios")
     abrir_pdf = "compras.pdf"
     try:
         os.startfile(abrir_pdf)
