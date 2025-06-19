@@ -76,7 +76,32 @@ def vaciar_carrito():
     carrito.clear()
     actualizar_listboxes()
 
-def guardar_txt(nombre, envio, direccion, pago):
+def calcular_costo_envio(direccion):
+    direccion = direccion.lower()
+    if "puerto de rosario" in direccion:
+        return 150 * 751
+    if "empedrado" in direccion:
+        return 150 * 57.3
+    if "san lorenzo" in direccion:
+        return 150 * 78
+    if "saladas" in direccion:
+        return 150 * 103
+    if "mburucuya" in direccion:
+        return 150 * 124
+    if "caa cati" in direccion:
+        return 150 * 124
+    if "san miguel" in direccion:
+        return 150 * 158
+    if "itaibate" in direccion:
+        return 150 * 157
+    if "itati" in direccion:
+        return 150 * 69.6
+    if "paso de la patria" in direccion:
+        return 150 * 37.7
+    if "paso de los libres" in direccion:
+        return 150 * 367
+
+def guardar_txt(nombre, envio, direccion, pago, costo_envio):
     ahora = datetime.datetime.now()
     with open("compras.txt", "a", encoding="utf-8") as f:
         f.write(f"Compra realizada el {ahora.strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -85,12 +110,14 @@ def guardar_txt(nombre, envio, direccion, pago):
         f.write(f"Método de Pago: {pago}\n")
         if envio == "Envío":
             f.write(f"Dirección: {direccion}\n")
+            f.write(f"Costo de envío: ${costo_envio:.2f}\n")
         f.write("-" * 40 + "\n")
         total = 0
         for item in carrito:
             f.write(f"{item['producto']}: {item['cantidad']} x ${item['precio']:.2f} = ${item['subtotal']:.2f}\n")
             total += item['subtotal']
-        f.write(f"Total: ${total:.2f}\n")
+        total += costo_envio
+        f.write(f"Total (incluye envío): ${total:.2f}\n")
         f.write("=" * 40 + "\n\n")
     return ahora
 
@@ -181,8 +208,12 @@ def finalizar_compra():
     if not carrito:
         messagebox.showwarning("Carrito vacío", "Agregá productos antes de finalizar la compra.")
         return
+    
+    costo_envio = 0
+    if envio == "Envío":
+        costo_envio = calcular_costo_envio(direccion)
     try:
-        fecha = guardar_txt(nombre, envio, direccion, pago)
+        fecha = guardar_txt(nombre, envio, direccion, pago, costo_envio)
         pdf_file = generar_pdf(fecha)
         generar_historial_pdf()
         messagebox.showinfo("Compra Finalizada", f"Compra guardada y PDF generado:\n{pdf_file}")
