@@ -3,6 +3,7 @@ from tkinter import messagebox
 from openrouteservice import Client
 import folium
 import webbrowser
+import os
 
 # API Key de OpenRouteService
 API_KEY = "5b3ce3597851110001cf624816dd98becc4e4cce880a6c473c5ba5d3"
@@ -61,7 +62,7 @@ def calcular():
 # --- INTERFAZ ELEGANTE OSCURA ---
 ventana = tk.Tk()
 ventana.title("Simulador Logístico")
-ventana.geometry("500x200")
+ventana.geometry("500x300")
 ventana.configure(bg="#1e1e1e")
 
 # Estilos
@@ -72,8 +73,23 @@ menu_bg = "#2d2d2d"
 menu_fg = "#ffffff"
 fuente = ("Segoe UI", 12)
 
+#Botón para mostrar pedidos
+def mostrar_pedidos():
+    messagebox.showinfo("Pedidos", "Mostrando los pedidos diarios")
+    abrir_pdf = "compras.pdf"
+    try:
+        os.startfile(abrir_pdf)
+    except Exception as e:
+        messagebox.showerror("Error", "No se pudo abrir el archivo PDF")
+
+bot_pedidos = tk.Button(ventana,
+                        text="Mostrar Pedidos",
+                        font=("Segoe UI", 15, "bold"),
+                        command=mostrar_pedidos)
+bot_pedidos.pack(pady=10)
+
 # Etiquetas
-tk.Label(ventana, text="Seleccione destino:", font=fuente, bg="#1e1e1e", fg=etiqueta_color).grid(row=0, column=0, sticky="e", pady=10, padx=10)
+tk.Label(ventana, text="Seleccione destino:", font=fuente, bg="#1e1e1e", fg=etiqueta_color).pack(pady=10, padx=10)
 
 # Menú de selección
 destino_var = tk.StringVar()
@@ -82,10 +98,10 @@ opciones = list(DESTINOS.keys())
 menu = tk.OptionMenu(ventana, destino_var, *opciones)
 menu.config(bg=menu_bg, fg=menu_fg, font=fuente, highlightthickness=0, activebackground="#444")
 menu["menu"].config(bg=menu_bg, fg=menu_fg)
-menu.grid(row=1, column=1, sticky="w", padx=10)
+menu.pack(padx=10)
 
 # Botón
 boton = tk.Button(ventana, text="Calcular Ruta", command=calcular, bg=boton_bg, fg=boton_fg, font=fuente)
-boton.grid(row=2, column=0, columnspan=2, pady=20)
+boton.pack(pady=20)
 
 ventana.mainloop()
