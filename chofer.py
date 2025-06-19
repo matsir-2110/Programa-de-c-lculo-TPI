@@ -65,7 +65,7 @@ ventana.title("Simulador Logístico")
 ventana.geometry("500x300")
 ventana.configure(bg="#1e1e1e")
 
-# Estilos
+#Estilos
 etiqueta_color = "#ffffff"
 boton_bg = "#2d2d2d"
 boton_fg = "#ffffff"
@@ -75,7 +75,7 @@ fuente = ("Segoe UI", 12)
 
 #Botón para mostrar pedidos
 def mostrar_pedidos():
-    messagebox.showinfo("Pedidos", "Mostrando los pedidos diarios")
+    messagebox.showinfo("Pedidos", "Mostrando los pedidos")
     abrir_pdf = "compras.pdf"
     try:
         os.startfile(abrir_pdf)

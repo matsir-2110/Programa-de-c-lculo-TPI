@@ -25,15 +25,15 @@ def cargar_logo(parent):
 
 def guardar_usuario_archivo(usuario, contraseña):
     with open(USUARIOS_FILE, "a", encoding="utf-8") as f:
-        f.write(f"{usuario}|{contraseña}\n")
+        f.write(f"{usuario},{contraseña}\n")
 
 def validar_usuario(usuario, contraseña):
     if not os.path.exists(USUARIOS_FILE):
         return False
-    with open(USUARIOS_FILE, "r", encoding="utf-8") as f:
+    with open(USUARIOS_FILE, "r") as f:
         for linea in f:
-            if "|" in linea:
-                u, c = linea.strip().split("|", 1)
+            if "," in linea:
+                u, c = linea.strip().split(",", 1)
                 if u == usuario and c == contraseña:
                     return True
     return False
@@ -52,10 +52,10 @@ def crear_usuario():
             return
         # Verificar que usuario no exista
         if os.path.exists(USUARIOS_FILE):
-            with open(USUARIOS_FILE, "r", encoding="utf-8") as f:
+            with open(USUARIOS_FILE, "r") as f:
                 for linea in f:
-                    if "|" in linea:
-                        if linea.split("|")[0] == u:
+                    if "," in linea:
+                        if linea.split(",")[0] == u:
                             messagebox.showerror("Error", "El usuario ya existe.")
                             return
         guardar_usuario_archivo(u, c)
@@ -93,7 +93,7 @@ def login_cliente():
         c = entry_contraseña.get()
         if validar_usuario(u, c):
             messagebox.showinfo("Acceso concedido", f"¡Bienvenido {u}!")
-            subprocess.run(["python", "cliente.py"])  
+            subprocess.run(["python", "cliente.py"])
             top_login.destroy()
         else:
             messagebox.showerror("Error", "Usuario o contraseña incorrectos.")
@@ -132,7 +132,7 @@ def login_chofer():
         if (u == usuario_chofer and c == contraseña_chofer):
             messagebox.showinfo("Acceso concedido", "¡Acceso concedido al chofer!")
             top_login.destroy()
-            subprocess.run(["python", "mapa2.py"])
+            subprocess.run(["python", "chofer.py"])
         else:
             messagebox.showerror("Error", "Usuario o contraseña incorrectos.")
 
